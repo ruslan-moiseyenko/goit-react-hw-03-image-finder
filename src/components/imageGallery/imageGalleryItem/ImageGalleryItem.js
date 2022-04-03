@@ -1,13 +1,25 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { GalleryItem, Image } from './galleryItem.styled';
 
 
-export default function ImageGalleryItem({ images }) {
-  return (
-    images.map(({ id, webformatURL, largeImageURL, tags }) => (
-      <GalleryItem key={id} className="gallery-item">
-        <Image src={webformatURL} alt={tags} loading="lazy" />
-      </GalleryItem>
-    ))
-  );
+export default class ImageGalleryItem extends Component {
+
+  onImageClick = (event, imageURL) => {
+    this.props.onImageClick(imageURL);
+
+  }
+
+
+  render() {
+    const { images } = this.props;
+    return (
+
+      images.map(image => (
+        <GalleryItem key={image.id}>
+          <Image alt={image.tags} src={image.webformatURL} onClick={(event) => this.onImageClick(event, image.largeImageURL)} loading="lazy" />
+        </GalleryItem>
+      ))
+
+    );
+  }
 }
