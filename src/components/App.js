@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { RotatingLines } from 'react-loader-spinner'
 import SearchBar from './searchbar/Searchbar.js';
 import ImageGallery from './imageGallery/Imagegallery.js';
 import Modal from './modal/Modal.js';
@@ -54,7 +55,6 @@ class App extends Component {
             images: [...prevState.images, ...data.hits],
             panding: false,
             resolved: true
-            // page: this.state.page + 1,
           }));
         }
       } else {
@@ -100,7 +100,9 @@ class App extends Component {
         <SearchBar onSubmit={this.onSearchSubmit} />
         {idle && <h3>Enter what you want to find</h3>}
         {resolved && <ImageGallery images={this.state.images} showModal={this.toggleModal} onImageClick={this.onImageClick} />}
-        {panding && <h3>Loading...</h3>}
+        {panding && <Modal >
+          <RotatingLines width="100" />
+        </Modal>}
         {images.length ? <MoreImagesButton onClick={this.onButtonClick} /> : null}
         {rejected && <h3>{error}</h3>}
         {showModal && <Modal onClose={this.toggleModal}>
@@ -108,54 +110,6 @@ class App extends Component {
         </Modal>}
       </>
     );
-
-    // if (idle) {
-    //   return (
-    //     <>
-    //       <SearchBar onSubmit={this.onSearchSubmit} />
-    //       <h3>Enter what you want to find</h3>
-    //     </>
-    //   );
-    // }
-
-    // if (resolved) {
-    //   return (
-    //     <>
-    //       <SearchBar onSubmit={this.onSearchSubmit} />
-    //       <ImageGallery images={this.state.images} showModal={this.toggleModal} onImageClick={this.onImageClick} />
-    //       {images.length ? <MoreImagesButton onClick={this.onButtonClick} /> : null}
-    //     </>
-    //   );
-    // }
-
-
-    // if (rejected) {
-    //   return (
-    //     <>
-    //       <SearchBar onSubmit={this.onSearchSubmit} />
-    //       <h3>{error}</h3>
-    //     </>
-    //   );
-    // }
-
-    // if (panding) {
-    //   return (
-    //     <>
-    //       <SearchBar onSubmit={this.onSearchSubmit} />
-    //       <h3>Loading...</h3>
-    //     </>
-    //   );
-    // }
-
-
-    // if (showModal) {
-    //   console.log('Modal should appear');
-    //   return (
-    //     <Modal onClose={this.toggleModal}>
-    //       <img src={modalContent} alt="bigImage" />
-    //     </Modal>
-    //   );
-    // }
   }
 }
 export default App;
