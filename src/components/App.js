@@ -21,6 +21,8 @@ class App extends Component {
     showModal: false,
     modalContent: '',
   };
+  baseURL =
+    'https://pixabay.com/api/?key=25600695-4ceee91aa58c1079792de0ba1&image_type=photo&';
 
   componentDidUpdate(prevProps, prevState) {
     if (
@@ -33,9 +35,9 @@ class App extends Component {
     }
   }
 
-  onSearchSubmit = newURL => {
+  onSearchSubmit = searhQuery => {
     this.setState({
-      url: newURL,
+      url: this.baseURL + 'q=' + searhQuery,
       images: [],
     });
   };
