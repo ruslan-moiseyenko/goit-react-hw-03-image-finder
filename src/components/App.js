@@ -1,15 +1,14 @@
 import React, { Component } from 'react';
-import { RotatingLines } from 'react-loader-spinner';
+import FadeLoader from 'react-spinners/FadeLoader';
 import SearchBar from './searchbar/Searchbar.js';
 import ImageGallery from './imageGallery/Imagegallery.js';
 import Modal from './modal/Modal.js';
 import MoreImagesButton from './button/Button.js';
 import { ModalImage } from './imageGallery/imageGalleryItem/galleryItem.styled';
-
 class App extends Component {
   state = {
     idle: true,
-    panding: false,
+    pending: false,
     rejected: false,
     resolved: false,
     error: null,
@@ -45,7 +44,7 @@ class App extends Component {
   async fetchImages(url) {
     this.setState({
       idle: false,
-      panding: true,
+      pending: true,
       rejected: false,
     });
     try {
@@ -54,7 +53,7 @@ class App extends Component {
         const data = await response.json();
         if (data.hits.length === 0) {
           this.setState({
-            panding: false,
+            pending: false,
             rejected: true,
             resolved: false,
             showBtnMore: false,
@@ -72,7 +71,7 @@ class App extends Component {
           }
           this.setState(prevState => ({
             images: [...prevState.images, ...data.hits],
-            panding: false,
+            pending: false,
             resolved: true,
             error: '',
           }));
@@ -80,7 +79,7 @@ class App extends Component {
       } else {
         this.setState({
           error: 'Something went wrong',
-          panding: false,
+          pending: false,
           rejected: true,
         });
       }
@@ -109,7 +108,7 @@ class App extends Component {
   render() {
     const {
       idle,
-      panding,
+      pending,
       rejected,
       error,
       images,
@@ -129,9 +128,9 @@ class App extends Component {
             onImageClick={this.onImageClick}
           />
         ) : null}
-        {panding && (
+        {pending && (
           <Modal>
-            <RotatingLines width="100" />
+            <FadeLoader />
           </Modal>
         )}
         {showBtnMore ? <MoreImagesButton onClick={this.onButtonClick} /> : null}
