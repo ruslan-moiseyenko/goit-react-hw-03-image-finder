@@ -6,14 +6,13 @@ import ImageGalleryItem from './imageGalleryItem/ImageGalleryItem';
 export default function ImageGallery({ images, onImageClick }) {
   return (
     <ImageGalleryWrap>
-      {images.length > 0 &&
-        images.map(image => (
-          <ImageGalleryItem
-            key={image.id}
-            image={image}
-            onImageClick={onImageClick}
-          />
-        ))}
+      {images.map(image => (
+        <ImageGalleryItem
+          key={image.id}
+          image={image}
+          onImageClick={onImageClick}
+        />
+      ))}
     </ImageGalleryWrap>
   );
 }

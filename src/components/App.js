@@ -120,7 +120,7 @@ class App extends Component {
       <>
         <SearchBar onSubmit={this.onSearchSubmit} />
         {idle && <h3>Enter what you want to find</h3>}
-        {images ? (
+        {images.length ? (
           <ImageGallery
             images={this.state.images}
             showModal={this.toggleModal}
