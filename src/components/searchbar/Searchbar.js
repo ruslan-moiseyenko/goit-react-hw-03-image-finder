@@ -11,17 +11,10 @@ class SearchBar extends Component {
     query: '',
   };
 
-  baseURL =
-    'https://pixabay.com/api/?key=25600695-4ceee91aa58c1079792de0ba1&image_type=photo&';
-
   searchHandler = e => {
     e.preventDefault();
     const { query } = this.state;
-    let normalizedQuery = query
-      .trim()
-      .toLowerCase()
-      .split(' ')
-      .join('+');
+    let normalizedQuery = query.trim().toLowerCase().split(' ').join('+');
     this.props.onSubmit(normalizedQuery);
   };
 

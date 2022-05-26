@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { createPortal } from 'react-dom';
+import PropTypes from 'prop-types';
 import { Backdrop, ModalContent } from './modal.styed';
 
 const modalRoot = document.querySelector('#modal-root');
@@ -15,7 +16,6 @@ export default class Modal extends Component {
 
   handleKeyDown = e => {
     if (e.key === 'Escape') {
-      console.log('On Modal Escape');
       this.props.onClose();
     }
   };
@@ -37,3 +37,8 @@ export default class Modal extends Component {
     );
   }
 }
+
+Modal.propTypes = {
+  children: PropTypes.node.isRequired,
+  onClose: PropTypes.func.isRequired,
+};

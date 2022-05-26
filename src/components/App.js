@@ -17,6 +17,7 @@ class App extends Component {
     showBtnMore: false,
     url: '',
     page: 1,
+    totalHits: 0,
     showModal: false,
     modalContent: '',
   };
@@ -32,12 +33,18 @@ class App extends Component {
         this.fetchImages(this.state.url + `&page=${this.state.page}`);
       });
     }
+    if (prevState.images.length !== this.state.images.length) {
+      this.setState({
+        showBtnMore: this.state.totalHits > this.state.images.length,
+      });
+    }
   }
 
   onSearchSubmit = searhQuery => {
     this.setState({
       url: this.baseURL + 'q=' + searhQuery,
       images: [],
+      page: 1,
     });
   };
 
@@ -60,20 +67,12 @@ class App extends Component {
             error: 'No images were found',
           });
         } else {
-          if (data.hits.length < 20) {
-            this.setState({
-              showBtnMore: false,
-            });
-          } else {
-            this.setState({
-              showBtnMore: true,
-            });
-          }
           this.setState(prevState => ({
             images: [...prevState.images, ...data.hits],
             pending: false,
             resolved: true,
             error: '',
+            totalHits: data.totalHits,
           }));
         }
       } else {
@@ -133,7 +132,7 @@ class App extends Component {
             <FadeLoader />
           </Modal>
         )}
-        {showBtnMore ? <MoreImagesButton onClick={this.onButtonClick} /> : null}
+        {showBtnMore && <MoreImagesButton onClick={this.onButtonClick} />}
         {rejected && <h3>{error}</h3>}
         {showModal && (
           <Modal onClose={this.toggleModal}>
